@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Thrift JavaScript Multi</title>
+    
+    <script src="../thrift.js" type="text/javascript"></script>
+    <!-- <script src="../thrift-js-binary-protocol.js" type="text/javascript"></script> -->
+   
+     <script src="../gen-js/multiplication_types.js" type="text/javascript"></script>
+    <script src="../gen-js/MultiplicationService.js" type="text/javascript"></script>
+ 
+
+
+</head>
+<body>
+    <h1>Thrift JavaScript Multi</h1>   
+    <button id="btn">Get Message from Java-Multi Server</button>
+        <h2>Server Response: <div id="output"></div></h2>
+
+    <script type="text/javascript">
+    getMessage();
+        document.getElementById("btn").addEventListener("click", getMessage, false);
+
+        function getMessage() {
+
+              try {
+            var transport = new Thrift.Transport("http://localhost:9090/hello");
+            var protocol  = new Thrift.Protocol(transport);
+            var client = new MultiplicationServiceClient(protocol);
+            var msg= client.multiply(9,5);
+            // alert("msg recieved is "+msg)
+            // var transport = new Thrift.TXHRTransport("localhost:9090");
+            // var protocol  = new Thrift.TBinaryProtocol(transport);
+
+            // console.log(client);
+            // console.log((JSON.stringify(client)));
+
+        
+            console.log((JSON.stringify(msg)));
+            document.getElementById("output").innerHTML = msg;
+
+             } catch(e) {
+                console.log(e);
+    }
+        }
+
+
+    </script>
+</body> 
+</html>
+
